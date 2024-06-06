@@ -7,6 +7,7 @@ class EstablishmentFilter(django_filters.FilterSet):
     services = django_filters.CharFilter(method='filter_services')
     type = django_filters.CharFilter(method='filter_type')
     price_category = django_filters.CharFilter(method='filter_price_category')
+    capacity = django_filters.CharFilter(method='filter_capacity')
 
     class Meta:
         model = Establishment
@@ -33,3 +34,6 @@ class EstablishmentFilter(django_filters.FilterSet):
     def filter_price_category(self, queryset, name, value):
         price_category_list = value.split(';')
         return queryset.filter(price_category__price_range__in=price_category_list)
+
+    def filter_capacity(self, queryset, name, capacity):
+        return queryset.filter(capacity__gte=capacity)
